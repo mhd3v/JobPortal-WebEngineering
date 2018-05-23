@@ -1,5 +1,24 @@
 <?php
 
+if(isset($_GET['keyword']) && isset($_GET['location'])){
+  $keyword = $_GET['keyword'];
+  $location = $_GET['location'];
+  $query = "select * from job_listing where JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%' OR Location LIKE '%{$location}%'";
+}
+  
+else if(isset($_GET['keyword'])){
+  $keyword = $_GET['keyword'];
+  $query = "select * from job_listing where JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%'";
+}
+
+else if(isset($_GET['location'])){
+  $location = $_GET['location'];
+  $query = "select * from job_listing where Location LIKE '%{$location}%'";
+}
+
+else
+  $query = "select * from job_listing";
+
 $page = "findjob";
 include('header.php');
 
@@ -176,9 +195,6 @@ include('header.php');
                    <?php 
 
                    $con = mysqli_connect('localhost', 'root', '', 'jobportal');
-
-                   
-                   $query = "select * from job_listing";
 
                    $res = mysqli_query($con, $query);
 

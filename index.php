@@ -9,11 +9,11 @@ include('header.php');
         <div class="hero-header">
           <div class="inner-hero-header">
             <div class="container">
-              <div class="text-center logo"> <a href="index.html"><img src="assets/theme/images/logo.png" alt=""></a></div>
+              <div class="text-center logo"> <a href="index.php"><img src="assets/theme/images/logo.png" alt=""></a></div>
               <div class="relative">
                 <i class="fa fa-globe ic-fade-globe"></i>
                 <!-- form search -->
-                <form class="form-search-home" method="post" action="job_list.html">
+                <form class="form-search-home" method="post" action="job_list.php">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">

@@ -4,7 +4,7 @@ if(isset($_GET['logout'])){
 
   if(session_status() == PHP_SESSION_NONE) 
     session_start();
-    
+
   session_unset($_SESSION['user']);
   session_destroy();
   header('Location: index.php');
@@ -149,7 +149,7 @@ if(session_status() == PHP_SESSION_NONE)
               <ul class="nav navbar-nav">
                 <li class="active"><a href="job_list.php"><strong>Find a Job</strong></a></li>
                 <li class=""><a href="resume_list.php"><strong>Find Resumes</strong></a></li>
-                <li  class=""><a href="job_post_1.php"><strong>Post a Job</strong></a></li>
+                <li  class=""><a href="job_post_2.php"><strong>Post a Job</strong></a></li>
                 <li><a href="login.php"><strong>Login</strong></a></li>
                 <li><a href="register.php"><strong>Register</strong></a></li>
                 <li class="dropdown">
