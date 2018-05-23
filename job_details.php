@@ -2,6 +2,34 @@
 
 include('header.php');
 
+$con = mysqli_connect('localhost', 'root', '', 'jobportal');
+
+$user; $applytext; $appplied = false;
+
+if(session_status() == PHP_SESSION_NONE) 
+session_start();
+
+if(isset($_SESSION['user']))
+$user = $_SESSION['user'];
+
+else
+echo "You need to be logged in to apply!";
+
+$listingid = (int)$_GET['lid'];
+
+$query = "select * from job_application where CandidateUserName = '{$user}' and ListingId = {$listingid}";
+
+$res = mysqli_query($con, $query);
+
+if(mysqli_num_rows($res) == 0)
+$applytext  = "Apply for this job";
+else{
+  $appplied = true;
+  $applytext  = "Already Applied";
+}
+
+
+
 ?>
 
 
@@ -16,18 +44,18 @@ include('header.php');
 
             <div class="col-md-8">
               <!-- form search -->
-              <form class="form-search-list">
+              <form class="form-search-list" action="job_list.php">
                 <div class="row">
                   <div class="col-sm-5 col-xs-6 ">
                     <div class="form-group">
                       <label class="color-white">What</label>
-                      <input class="form-control" placeholder="job title, keywords or company name" >
+                      <input name="keyword" class="form-control" placeholder="job title, keywords or company name" >
                     </div>
                   </div>
                   <div class="col-sm-5 col-xs-6 ">
                     <div class="form-group">
                       <label class="color-white">Where</label>
-                      <input class="form-control" placeholder="city, province, or region">
+                      <input name="location" class="form-control" placeholder="city, province, or region">
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-12 ">
@@ -174,7 +202,7 @@ include('header.php');
                 <div>Job details :</div>
               </div>
               <div class="col-sm-6">
-                <div class="text-right"><a href="#">&laquo; Go back to job listings</a></div>
+                <div class="text-right"><a href="job_list.php">&laquo; Go back to job listings</a></div>
               </div>
             </div>
           </div>
@@ -223,8 +251,27 @@ include('header.php');
                 <!-- box affix right -->
                 <div class="block-section " id="affix-box">
                   <div class="text-right">
-                    <p><a href="#" class="btn btn-theme btn-line dark btn-block-xs">Aplly WIth Linkedin</a></p>
-                    <p><a href="#modal-apply"  data-toggle="modal" class="btn btn-theme btn-t-primary btn-block-xs">Apply This Job</a></p>
+                    <p><a href="#" class="btn btn-theme btn-line dark btn-block-xs">Apply With LinkedIn</a></p>
+                    
+                    <p><a 
+                    
+                    href="<?php  
+
+                    if($appplied)
+                    
+                    echo '#already-applied';
+
+                    else if(isset($user))
+                    echo '#modal-apply';
+
+                    else
+                    echo '#modal-login';
+                    
+                    ?>"
+                    
+                    data-toggle="modal" class="btn btn-theme btn-t-primary btn-block-xs" id="applybutton"><?php echo $applytext?></a></p>
+
+
                     <p><a href="#" class="btn btn-theme btn-t-primary btn-block-xs">Login to Save This Job</a></p>
                     <p><a href="#map-toogle" id="btn-map-toogle" data-toggle="collapse" class="btn btn-theme btn-t-primary btn-block-xs">Ofice Location</a></p>
                     <p>Share This Job <span class="space-inline-10"></span> :</p>
@@ -262,13 +309,11 @@ include('header.php');
 
 
 
-
-
         <!-- modal apply -->
         <div class="modal fade" id="modal-apply">
           <div class="modal-dialog ">
             <div class="modal-content">
-              <form>
+              <form id="applicationform" method="post">
                 <div class="modal-header ">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title" >Apply</h4>
@@ -276,15 +321,16 @@ include('header.php');
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Full name</label>
-                    <input type="email" class="form-control "  placeholder="Enter Email">
+                    <input name="fullname" type="text" class="form-control "  placeholder="Enter Fullname">
                   </div>
                   <div class="form-group">
                     <label>Email address</label>
-                    <input type="email" class="form-control "  placeholder="Enter Email">
+                    <input name="email" type="email" class="form-control "  placeholder="Enter Email">
+                    <input name="listingid" type="checkbox" checked="true" value = "<?php echo $_GET['lid']?>" class="form-control " style="display:none">
                   </div>
                   <div class="form-group">
-                    <label>Tell us why you better?</label>
-                    <textarea class="form-control" rows="6" placeholder="Something Comment"></textarea>
+                    <label>Tell us why you're better?</label>
+                    <textarea name="reason" class="form-control" rows="6" placeholder="Something Comment"></textarea>
                   </div>
                   <div class="form-group">
                     <label>Your Resume</label>
@@ -298,6 +344,9 @@ include('header.php');
                     </div>
                     <small>Upload your CV/resume. Max. file size: 24 MB.</small>
                   </div>
+
+                  <div id="applyerror" class="alert alert-danger" style="display: none"></div>
+
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default btn-theme" data-dismiss="modal">Close</button>
@@ -306,7 +355,41 @@ include('header.php');
               </form>
             </div>
           </div>
-        </div><!-- end modal  apply -->        
+        </div><!-- end modal  apply -->      
+        
+        <!-- modal need login -->
+        <div class="modal fade" id="need-login">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+
+              <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >You must login to apply</h4>
+              </div>
+              <div class="modal-footer text-center">
+                <a href="login.php" class="btn btn-default btn-theme" >Login</a>
+                <a href="register.php" class="btn btn-success btn-theme">Create account (it's free)</a>
+              </div>
+
+            </div>
+          </div>
+        </div><!-- end modal  need login -->
+
+
+        <!-- modal already applied -->
+        <div class="modal fade" id="already-applied">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+
+              <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >You've already applied for this job</h4>
+              </div>
+
+            </div>
+          </div>
+        </div><!-- end modal already applied -->
+
       </div><!--end body-content -->
 
 
@@ -332,6 +415,47 @@ include('header.php');
     <script src="assets/plugins/gmap3.min.js"></script>
     <!-- maps single marker -->
     <script src="assets/theme/js/map-detail.js"></script>
+
+
+    <script>
+
+    $(document).ready(function(){
+    
+    $("#applyerror").hide();
+
+    $(function () {
+
+      $('#applicationform').on('submit', function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+          type: 'post',
+          url: 'insert/insert_application.php',
+          data: $('form').serialize(),
+          success: function (data) {
+
+            if(data == "success"){
+              $("#modal-apply").modal('hide');
+              $("#applybutton").html("Successfully Applied");
+              $("#applybutton").attr('class',"btn btn-success btn-block-xs")
+            }
+              
+            else{
+              $("#applyerror").show();
+              $("#applyerror").html(data);              
+            }
+
+          }
+        });
+
+      });
+
+    });
+
+    });
+
+    </script>
 
   </body>
 </html>

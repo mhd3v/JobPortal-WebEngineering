@@ -13,10 +13,10 @@ $user = $_SESSION['user'];
 else
 echo "You need to be logged in to apply!";
 
-$fullname = "asd";
-$email = "asdad";
-$reason = "asdad";
-$listingid = 12;
+$fullname = $_POST['fullname'];
+$email = $_POST['email'];
+$reason = $_POST['reason'];
+$listingid = (int)$_POST['listingid'];
 
 $query = "select * from job_application where CandidateUserName = '{$user}' and ListingId = {$listingid}";
 
@@ -30,7 +30,7 @@ if(mysqli_num_rows($res) == 0){
     $res = mysqli_query($con, $query);
 
     if($res){
-        echo "Signup successful";
+        echo "success";
     }
         
     else
@@ -42,4 +42,3 @@ else
 echo "Already applied";
 
 ?>
-
