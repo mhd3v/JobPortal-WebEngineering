@@ -1,23 +1,40 @@
 <?php
 
-if(isset($_GET['keyword']) && isset($_GET['location'])){
+$search;$location ="";$keyword="";
+
+if(isset($_GET['keyword']) && $_GET['keyword'] != "" && isset($_GET['location']) && $_GET['location'] !=""){
+  
   $keyword = $_GET['keyword'];
   $location = $_GET['location'];
-  $query = "select * from job_listing where JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%' OR Location LIKE '%{$location}%'";
+  $search = $keyword." listings in ".$location;
+  
+  $query = "select * from job_listing where (JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%') AND Location LIKE '%{$location}%'";
+
+  if(isset($_GET['sortby']))
+    $query = $query." ORDER BY ListingTime";
 }
   
-else if(isset($_GET['keyword'])){
+else if(isset($_GET['keyword']) && $_GET['keyword'] != ""){
+
   $keyword = $_GET['keyword'];
+  $search = $keyword." listings Worldwide";
+
   $query = "select * from job_listing where JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%'";
+
+  if(isset($_GET['sortby']))
+    $query = $query." ORDER BY ListingTime";
 }
 
-else if(isset($_GET['location'])){
+else if(isset($_GET['location']) && $_GET['location'] != ""){
+
   $location = $_GET['location'];
-  $query = "select * from job_listing where Location LIKE '%{$location}%'";
-}
+  $search = "All listings in ".$location;
 
-else
-  $query = "select * from job_listing";
+  $query = "select * from job_listing where Location LIKE '%{$location}%'";
+  
+  if(isset($_GET['sortby']))
+    $query = $query." ORDER BY ListingTime";
+}
 
 $page = "findjob";
 include('header.php');
@@ -36,18 +53,18 @@ include('header.php');
 
             <div class="col-md-8">
               <!-- form search -->
-              <form class="form-search-list">
+              <form class="form-search-list" action="job_list.php">
                 <div class="row">
                   <div class="col-sm-5 col-xs-6 ">
                     <div class="form-group">
                       <label class="color-white">What</label>
-                      <input class="form-control" placeholder="job title, keywords or company name" >
+                      <input name="keyword" class="form-control" placeholder="job title, keywords or company name" >
                     </div>
                   </div>
                   <div class="col-sm-5 col-xs-6 ">
                     <div class="form-group">
                       <label class="color-white">Where</label>
-                      <input class="form-control" placeholder="city, province, or region">
+                      <input name="location" class="form-control" placeholder="city, province, or region">
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-12 ">
@@ -175,7 +192,7 @@ include('header.php');
         <div class="bg-color2">
           <div class="container">
             <div class="row">
-              <div class="col-md-9">
+              <div class="col-md-12">
 
                 <!-- box listing -->
                 <div class="block-section-sm box-list-area">
@@ -183,9 +200,16 @@ include('header.php');
                   <!-- desc top -->
                   <div class="row hidden-xs">
                     <div class="col-sm-6  ">
-                      <p><strong class="color-black">PHP jobs in United States</strong></p>
+                      <p><strong class="color-black"><?php echo $search ?></strong></p>
                     </div>
-                    <div class="col-sm-6">
+                    
+                    <div class="col-xs-4">
+                      <p class="text-right">
+                        <strong>Sort by: </strong><strong>Relevance</strong> - <a href="<?php echo 'job_list.php?keyword='.$keyword.'&location='.$location.'&sortby=date' ?>" class="link-black">
+                        <strong>Date</strong></a>
+                      </p>
+                    </div>
+                    <div class="col-sm-2">
                       <p class="text-right">
                         Jobs 1 to 10 of 578
                       </p>
@@ -195,6 +219,8 @@ include('header.php');
                    <?php 
 
                    $con = mysqli_connect('localhost', 'root', '', 'jobportal');
+                  
+                   //echo $query;
 
                    $res = mysqli_query($con, $query);
 
@@ -221,213 +247,29 @@ include('header.php');
                         </div>
                       </div>
                     </div><!-- end item list -->
-                    
-                    <?php }} ?>
-
-
                   </div>
 
+                    <?php }
+                  }
 
-                  <!-- form get alert -->
-                  <div class="get_alert">
-                    <h4>Get email updates for the latest <span class=" ">PHP jobs in United States</span></h4>
-                    <form>
+                  else{ ?>
+
+                  <div class="box-list">
+                    <div class="item">
                       <div class="row">
-                        <div class="col-md-9">
-                          <div class="form-group">
-                            <label>My Email</label>
-                            <input class="form-control" placeholder="Enter Email">
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group">
-                            <label class="hidden-sm hidden-xs ">&nbsp;</label>
-                            <button class="btn btn-theme btn-success btn-block">Activate</button>
-                          </div>
+                        
+                        <div class="col-md-12" style="text-align:center">
+                          <h3 class="no-margin-top">No results found<i class=" color-white-mute font-1x"></i></a></h3>
+                          <h5><span class="color-black"> Try refining your query</span></h5>
                         </div>
                       </div>
-                      <small>You can cancel email alerts at any time.</small>
-                    </form>
-                  </div><!-- end form get alert -->
-
-                  <!-- pagination -->
-                  <nav >
-                    <ul class="pagination pagination-theme  no-margin">
-                      <li>
-                        <a href="#" aria-label="Previous">
-                          <span aria-hidden="true">&larr;</span>
-                        </a>
-                      </li>
-                      <li class="active"><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><span>...</span></li>
-                      <li><a href="#">50</a></li>
-                      <li>
-                        <a href="#" aria-label="Next">
-                          <span aria-hidden="true">&rarr;</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav><!-- pagination -->
-
-                </div><!-- end box listing -->
-
+                    </div><!-- end item list -->
+                  </div>
+              
+                  <?php }?>
 
               </div>
-              <div class="col-md-3">
-                <div class="block-section-sm side-right">
-                  <div class="row">
-                    <div class="col-xs-6">
-                      <p><strong>Sort by: </strong></p>
-                    </div>
-                    <div class="col-xs-6">
-                      <p class="text-right">
-                        <strong>Relevance</strong> - <a href="#" class="link-black"><strong>Date</strong></a>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="result-filter">
-                    <h5 class="no-margin-top font-bold margin-b-20 " ><a href="#s_collapse_1" data-toggle="collapse" >Salary Estimate <i class="fa ic-arrow-toogle fa-angle-right pull-right"></i> </a></h5>
-                    <div class="collapse in" id="s_collapse_1">
-                      <div class="list-area">
-                        <ul class="list-unstyled">
-                          <li>
-                            <a  href="#" >$50,000+</a> (16947)
-                          </li>
-                          <li>
-                            <a  href="#" >$70,000+</a> (13915)
-                          </li>
-                          <li>
-                            <a  href="#" >$90,000+</a> (9398)
-                          </li>
-                          <li>
-                            <a  href="#" >$110,000+</a> (4112)
-                          </li>
-                          <li>
-                            <a  href="#" >$130,000+</a> (1864)
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <h5 class="font-bold  margin-b-20" ><a href="#s_collapse_5" data-toggle="collapse" >Job Type <i class="fa ic-arrow-toogle fa-angle-right pull-right"></i></a> </h5>
-                    <div class="collapse in" id='s_collapse_5'>
-                      <div class="list-area">
-                        <ul class="list-unstyled ">
-                          <li>
-                            <a  href="#" >Full-time </a> (558)
-                          </li>
-                          <li>
-                            <a  href="#" >Part-time </a> (438)
-                          </li>
-                          <li>
-                            <a  href="#" >Contract </a> (313)
-                          </li>
-                          <li>
-                            <a  href="#" >Internship</a> (169)
-                          </li>
-                          <li>
-                            <a  href="#" >Temporary  </a> (156)
-                          </li>
-                        </ul>
-
-                      </div>
-                    </div>
-
-
-                    <h5 class="font-bold  margin-b-20"><a href="#s_collapse_2" data-toggle="collapse" >Title <i class="fa ic-arrow-toogle fa-angle-right pull-right"></i></a>  </h5>
-                    <div class="collapse in" id="s_collapse_2">
-                      <div class="list-area">
-                        <ul class="list-unstyled ">
-                          <li>
-                            <a  href="#" >web developer</a> (558)
-                          </li>
-                          <li>
-                            <a  href="#" >PHP Developer</a> (438)
-                          </li>
-                          <li>
-                            <a  href="#" >Software Engineer </a> (313)
-                          </li>
-                          <li>
-                            <a  href="#" >Senior Software Engineer </a> (169)
-                          </li>
-                          <li>
-                            <a  href="#" >Front End Developer </a> (156)
-                          </li>
-                          <li>
-                            <a  href="#" >More ... </a> 
-                          </li>
-                        </ul>
-
-                      </div>
-                    </div>
-
-
-                    <h5 class="font-bold  margin-b-20"><a href="#s_collapse_3" data-toggle="collapse" >Company <i class="fa ic-arrow-toogle fa-angle-right pull-right"></i></a> </h5>
-                    <div class="collapse in" id="s_collapse_3">
-                      <div class="list-area">
-                        <ul class="list-unstyled ">
-                          <li>
-                            <a  href="#" >Unlisted Company</a> (558)
-                          </li>
-                          <li>
-                            <a  href="#" >CyberCoders</a> (438)
-                          </li>
-                          <li>
-                            <a  href="#" >Smith & Keller </a> (313)
-                          </li>
-                          <li>
-                            <a  href="#" >Robert Half Technology </a> (169)
-                          </li>
-                          <li>
-                            <a  href="#" >Jobspring Partners </a> (156)
-                          </li>
-                          <li>
-                            <a  href="#" >More ... </a> 
-                          </li>
-                        </ul>
-
-                      </div>
-                    </div>
-
-
-                    <h5 class="font-bold  margin-b-20" ><a href="#s_collapse_4" data-toggle="collapse" class="collapsed" >Location  <i class="fa ic-arrow-toogle fa-angle-right pull-right"></i> </a></h5>
-                    <div class="collapse" id='s_collapse_4'>
-                      <div class="list-area">
-                        <ul class="list-unstyled ">
-                          <li>
-                            <a  href="#" >New York, NY </a> (558)
-                          </li>
-                          <li>
-                            <a  href="#" >San Francisco, CA </a> (438)
-                          </li>
-                          <li>
-                            <a  href="#" >Washington, DC </a> (313)
-                          </li>
-                          <li>
-                            <a  href="#" >Chicago, IL</a> (169)
-                          </li>
-                          <li>
-                            <a  href="#" >Austin, TX  </a> (156)
-                          </li>
-                          <li>
-                            <a  href="#" >More ... </a> 
-                          </li>
-                        </ul>
-
-                      </div>
-                    </div>
-
-
-
-
-
-                  </div>
-                </div>
-
-
-              </div>
+          
             </div>
           </div>
         </div>
