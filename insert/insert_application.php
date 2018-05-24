@@ -18,27 +18,44 @@ $email = $_POST['email'];
 $reason = $_POST['reason'];
 $listingid = (int)$_POST['listingid'];
 
-$query = "select * from job_application where CandidateUserName = '{$user}' and ListingId = {$listingid}";
+$query = "select * from job_listing where ListingId = {$listingid} and PosterId = '{$user}'";
 
 $res = mysqli_query($con, $query);
 
 if(mysqli_num_rows($res) == 0){
 
-    $query = "INSERT INTO `job_application` (`ApplicationId`,`CandidateUserName`, `ListingId`,`FullName`, `Email`, `Reason`)
-    VALUES (NULL, '{$user}', {$listingid},'{$fullname}', '{$email}','{$reason}');";
+    $query = "select * from job_application where CandidateUserName = '{$user}' and ListingId = {$listingid}";
 
     $res = mysqli_query($con, $query);
 
-    if($res){
-        echo "success";
-    }
-        
+    if(mysqli_num_rows($res) == 0){
+
+        if($fullname != "" && $email != "" && $reason != ""){
+
+            $query = "INSERT INTO `job_application` (`ApplicationId`,`CandidateUserName`, `ListingId`,`FullName`, `Email`, `Reason`)
+            VALUES (NULL, '{$user}', {$listingid},'{$fullname}', '{$email}','{$reason}');";
+    
+            $res = mysqli_query($con, $query);
+    
+            if($res){
+                echo "success";
+            }
+                
+            else
+                echo $query;
+        }
+        else
+            echo "All field are required!";
+
+
+
+    } 
     else
-        echo $query;
+        echo "Already applied";  
 
 }
 
 else
-echo "Already applied";
+    echo "You can't apply to jobs you've listed";
 
 ?>

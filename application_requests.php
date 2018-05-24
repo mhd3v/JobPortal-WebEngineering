@@ -20,7 +20,7 @@ if(isset($_SESSION['user'])){
 
 
         <div class="container">
-          <div class="text-center logo"> <a href="index.html"><img src="assets/theme/images/logo.png" alt=""></a></div>
+          <div class="text-center logo"> <a href="index.php"><img src="assets/theme/images/logo.png" alt=""></a></div>
         </div>
 
       </header><!-- end main-header -->
@@ -60,6 +60,7 @@ if(isset($_SESSION['user'])){
                     <thead>
                     <tr>
                       <th>#</th>
+                      <th>Applicant Username</th>
                       <th>Applicant Full Name</th>
                       <th>Applied For</th>
                       <th class="text-right">Actions</th>
@@ -74,6 +75,7 @@ if(isset($_SESSION['user'])){
 
                      <tr>
                         <th scope="row"><?= $count; $count++;?></th>
+                        <td><?=$row['CandidateUserName']?></td>
                         <td><?=$row['FullName']?></td>
                         <td>
                           <?php 

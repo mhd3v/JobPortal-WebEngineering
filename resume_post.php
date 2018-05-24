@@ -16,7 +16,6 @@ include('header.php');
 
 ?>
 
-
         <div class="container">
           <div class="text-center logo"> <a href="index.php"><img src="assets/theme/images/logo.png" alt=""></a></div>
         </div>
@@ -93,7 +92,7 @@ include('header.php');
 
                 </form> <!-- end form post a job -->
                 
-                <!-- modal need login -->
+                <!-- modal success -->
                 <div class="modal fade" id="modal-success">
                   <div class="modal-dialog modal-md">
                     <div class="modal-content">
@@ -109,7 +108,7 @@ include('header.php');
 
                     </div>
                   </div>
-                </div><!-- end modal  need login -->
+                </div><!-- end modal success -->
 
                 
               </div>

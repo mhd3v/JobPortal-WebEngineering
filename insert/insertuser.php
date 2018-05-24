@@ -46,6 +46,6 @@ if($user != ""){
 }
 
 else
-echo "Enter a username";
+    echo "Enter a username";
 
 ?>

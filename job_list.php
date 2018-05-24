@@ -48,8 +48,11 @@ include('header.php');
           <div class="row">
           
             <div class="col-md-4">
-              <!-- logo -->
-              <div class="logo text-center-sm"> <a href="index.php"><img src="assets/theme/images/logo.png" alt=""></a></div>
+              <div class="logo text-center-sm inline"> <a href="index.php">
+                  <img src="assets/theme/images/logo.png" alt=""> 
+                  <div class="label-add">Jobs</div>
+                </a>
+              </div>
             </div>
 
             <div class="col-md-8">

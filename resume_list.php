@@ -24,8 +24,11 @@ include('header.php');
           <div class="row">
           
             <div class="col-md-4">
-              <!-- logo -->
-              <div class="logo text-center-sm"> <a href="index.php"><img src="assets/theme/images/logo.png" alt=""></a></div>
+              <div class="logo text-center-sm inline"> <a href="index.php">
+                  <img src="assets/theme/images/logo.png" alt=""> 
+                  <div class="label-add">Resumes</div>
+                </a>
+              </div>
             </div>
 
             <div class="col-md-8">
@@ -107,7 +110,7 @@ include('header.php');
                       <div class="row">
                         <div class="col-md-1 hidden-sm hidden-xs"><div class="img-item"><img src="./assets/theme/images/company-logo/1.jpg" alt=""></div></div>
                         <div class="col-md-11">
-                          <h3 class="no-margin-top"><a href="resume_details.php?lid=<?=$row['ResumeId']?>"> <?=$row['FullName'] ?> <i class="fa fa-link color-white-mute font-1x"></i></a></h3>
+                          <h3 class="no-margin-top"><a href="resume_details.php?rid=<?=$row['ResumeId']?>"> <?=$row['FullName'] ?> <i class="fa fa-link color-white-mute font-1x"></i></a></h3>
                           <h5><span class="color-black"><?=$row['Location'] ?></span></h5>
                           <p class="text-truncate "><?=$row['Title'] ?></p>
                           <p class="text-truncate "><?=$row['Degree'] ?> - <span class="color-white-mute"> <?=$row['University'] ?> </span></p>

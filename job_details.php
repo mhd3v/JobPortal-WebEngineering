@@ -38,8 +38,11 @@ else{
           <div class="row">
 
             <div class="col-md-4">
-              <!-- logo -->
-              <div class="logo text-center-sm"> <a href="index.php"><img src="assets/theme/images/logo.png" alt=""></a></div>
+              <div class="logo text-center-sm inline"> <a href="index.php">
+                  <img src="assets/theme/images/logo.png" alt=""> 
+                  <div class="label-add">Job</div>
+                </a>
+              </div>
             </div>
 
             <div class="col-md-8">
@@ -69,107 +72,7 @@ else{
               </form>  <!-- form search -->
             </div>
 
-
           </div>
-
-
-          <!-- modal Advanced search -->
-          <div class="modal fade" id="modal-advanced" >
-            <div class="modal-dialog ">
-              <div class="modal-content">
-                <form>
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Advanced Job Search</h4>
-                  </div>
-                  <div class="modal-body">
-                    <h5>Find Jobs</h5>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>With all of these words</label>
-                          <input type="text" class="form-control " name="text" >
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>With the exact phrase</label>
-                          <input type="text" class="form-control " name="text" >
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label>Show jobs of type</label>
-                      <select class="form-control">
-                        <option value="all">All job types</option>
-                        <option value="fulltime">Full-time</option>
-                        <option value="parttime">Part-time</option>
-                        <option value="contract">Contract</option>
-                        <option value="internship">Internship</option>
-                        <option value="temporary">Temporary</option>
-                      </select>
-                    </div>
-                    <div class="white-space-10"></div>
-                    <h5>Where and When</h5>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Radius  </label>
-                          <select id="radius" class="form-control">
-                            <option value="0">only in</option>
-                            <option value="5">within 5 kilometers </option>
-                            <option value="10">within 10 kilometers </option>
-                            <option value="15">within 15 kilometers </option>
-                            <option selected="" value="25">within 25 kilometers </option>
-                            <option value="50">within 50 kilometers </option>
-                            <option value="100">within 100 kilometers </option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Of  </label>
-                          <input type="text" class="form-control" maxlength="250" value="United States">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Age - Jobs published  </label>
-                          <select class="form-control">
-                            <option value="any">anytime</option>
-                            <option value="15">within 15 days</option>
-                            <option value="7">within 7 days</option>
-                            <option value="3">within 3 days</option>
-                            <option value="1">since yesterday</option>
-                            <option value="last">since my last visit</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Display</label>
-                          <select class="form-control">
-                            <option selected="" value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="50">50</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-theme" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success btn-theme">Find Jobs</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div><!-- end modal forgot password -->
-
-
 
 
         </div><!-- end form search area-->
@@ -220,9 +123,7 @@ else{
                       <!-- <a href="company_page.html"><img src="./assets/theme/images/patner/4.png" alt=""></a> -->
                       <h4><span class="color-black"> <?=$row['Company'] ?> </span> <span class="color-white-mute"><?=$row['Location'] ?></span></h4>
                     </div>
-                    <div class="col-md-4">
-                      <p class="text-right"><a href="#">Go to our website &raquo;</a></p>
-                    </div>
+                    
                   </div>
 
                   <h2 class="title"><a href="#"><?php echo $row['JobTitle']?></a></h2>
@@ -251,7 +152,6 @@ else{
                 <!-- box affix right -->
                 <div class="block-section " id="affix-box">
                   <div class="text-right">
-                    <p><a href="#" class="btn btn-theme btn-line dark btn-block-xs">Apply With LinkedIn</a></p>
                     
                     <p><a 
                     
@@ -270,17 +170,8 @@ else{
                     ?>"
                     
                     data-toggle="modal" class="btn btn-theme btn-t-primary btn-block-xs" id="applybutton"><?php echo $applytext?></a></p>
-
-
-                    <p><a href="#" class="btn btn-theme btn-t-primary btn-block-xs">Login to Save This Job</a></p>
-                    <p><a href="#map-toogle" id="btn-map-toogle" data-toggle="collapse" class="btn btn-theme btn-t-primary btn-block-xs">Ofice Location</a></p>
-                    <p>Share This Job <span class="space-inline-10"></span> :</p>
-                    <p class="share-btns">
-                      <a href="#" class="btn btn-primary"><i class="fa fa-facebook"></i></a>
-                      <a href="#" class="btn btn-info"><i class="fa fa-twitter"></i></a>
-                      <a href="#" class="btn btn-danger"><i class="fa fa-google-plus"></i></a>
-                      <a href="#" class="btn btn-warning"><i class="fa fa-envelope"></i></a>
-                    </p>
+                    
+                   
                   </div>
                 </div><!-- box affix right -->
 
@@ -313,18 +204,6 @@ else{
                   <div class="form-group">
                     <label>Tell us why you're better?</label>
                     <textarea name="reason" class="form-control" rows="6" placeholder="Something Comment"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label>Your Resume</label>
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                        <span class="btn btn-default btn-theme btn-file">
-                          File  <input type="file" >
-                        </span>
-                      </span>
-                      <input type="text" class="form-control form-flat" readonly>
-                    </div>
-                    <small>Upload your CV/resume. Max. file size: 24 MB.</small>
                   </div>
 
                   <div id="applyerror" class="alert alert-danger" style="display: none"></div>
