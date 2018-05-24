@@ -85,7 +85,6 @@ if(session_status() == PHP_SESSION_NONE)
                     <img src="assets/theme/images/people/4.jpg" alt="" class="img-profile"> &nbsp; <?php echo $_SESSION['user'] ?> <b class="caret"></b>
                   </a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="my_alerts.php"> My Alerts </a></li>
                     <li><a href="dashboard.php"> Dashboard <span class="badge ">5</span></a></li>
                     <li><a href="change_password.php"> Change Password</a></li>
                   </ul>

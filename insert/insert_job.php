@@ -1,7 +1,19 @@
 <?php 
 
 $con = mysqli_connect('localhost', 'root', '', 'jobportal');
-//name="categories[]" value="Accounting"
+
+$user;
+
+if(session_status() == PHP_SESSION_NONE) 
+session_start();
+
+if(isset($_SESSION['user']))
+$user = $_SESSION['user'];
+
+else
+echo "You need to be logged in to apply!";
+
+
 if($con){
 
     $categories = "";
@@ -23,8 +35,8 @@ if($con){
     $currentTimeString = date("h:i:A - Y/m/d");
     $currentTime = time();
 
-    $query = "INSERT INTO `job_listing` (`ListingId`, `Company`, `JobTitle`, `JobDescription`, `Location`, `JobCategory`, `Salary`, `SalaryType`, `Experience`, `ListingTimeString`, `ListingTime`)
-    VALUES (NULL, '{$com}', '{$jt}', '{$jd}', '{$location}', '{$categories}', {$sal}, '{$saltype}', NULL,'{$currentTimeString}', '{$currentTime}');";
+    $query = "INSERT INTO `job_listing` (`ListingId`, `Company`, `JobTitle`, `JobDescription`, `Location`, `JobCategory`, `Salary`, `SalaryType`, `Experience`, `ListingTimeString`, `ListingTime`, `PosterId`)
+    VALUES (NULL, '{$com}', '{$jt}', '{$jd}', '{$location}', '{$categories}', {$sal}, '{$saltype}', NULL,'{$currentTimeString}', '{$currentTime}', '{$user}');";
 
     $res = mysqli_query($con, $query);
 

@@ -31,12 +31,13 @@ include('header.php');
                 <div class="white-space-20"></div>
                 <ul class="list-unstyled">
                   <li><a href="my_alerts.php"> My Alerts </a></li>
-                  <li><a href="my_notifications.php"> Notifications (5)</a></li>
+                  <li><a href="my_listings.php"> My Listings</a></li>
+                  <li><a href="my_applications.php"> My Applications</a></li>
                   <li><a href="change_password.php"> Change Password</a></li>
 
                 </ul>
                 <div class="white-space-20"></div>
-                <a href="#" class="btn  btn-line soft btn-theme btn-pill btn-block">Post a Job</a>
+                <a href="job_post_2.php" class="btn  btn-line soft btn-theme btn-pill btn-block">Post a Job</a>
                 <a href="#" class="btn  btn-line soft  btn-theme btn-pill btn-block">Build Resume</a>
               </div>    </div>
             <div class="col-md-9 col-sm-9">

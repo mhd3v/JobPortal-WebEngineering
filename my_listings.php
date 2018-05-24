@@ -1,49 +1,28 @@
 <?php
 
-$search;$location ="";$keyword="";
+if(session_status() == PHP_SESSION_NONE) 
+session_start();
 
-if(isset($_GET['keyword']) && $_GET['keyword'] != "" && isset($_GET['location']) && $_GET['location'] !=""){
-  
-  $keyword = $_GET['keyword'];
-  $location = $_GET['location'];
-  $search = $keyword." listings in ".$location;
-  
-  $query = "select * from job_listing where (JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%') AND Location LIKE '%{$location}%'";
+if(isset($_SESSION['user'])){
 
-  if(isset($_GET['sortby']))
-    $query = $query." ORDER BY ListingTime";
-}
-  
-else if(isset($_GET['keyword']) && $_GET['keyword'] != ""){
+    $count;
 
-  $keyword = $_GET['keyword'];
-  $search = $keyword." listings Worldwide";
+    $user = $_SESSION['user'];
 
-  $query = "select * from job_listing where JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%'";
+    if(!(isset($_GET['sortby'])))
+        $query = "select * from job_listing where PosterId = '{$user}'";
+    else
+        $query = "select * from job_listing where PosterId = '{$user}' ORDER BY ListingTime";
 
-  if(isset($_GET['sortby']))
-    $query = $query." ORDER BY ListingTime";
-}
+    $con = mysqli_connect('localhost', 'root', '', 'jobportal');
+    $res = mysqli_query($con, $query);
 
-else if(isset($_GET['location']) && $_GET['location'] != ""){
-
-  $location = $_GET['location'];
-  $search = "All listings in ".$location;
-
-  $query = "select * from job_listing where Location LIKE '%{$location}%'";
-  
-  if(isset($_GET['sortby']))
-    $query = $query." ORDER BY ListingTime";
-}
-
-$con = mysqli_connect('localhost', 'root', '', 'jobportal');
-                  
-$res = mysqli_query($con, $query);
-
-$page = "findjob";
-include('header.php');
+    $page = "findjob";
+    include('header.php');
 
 ?>
+
+
         <!-- form search area-->
         <div class="container">
           <div class="row">
@@ -76,10 +55,11 @@ include('header.php');
                     </div>
                   </div>
                 </div>
-                
+            
               </form>  <!-- form search -->
             </div>
           </div>
+          
         </div><!-- end form search area-->
 
       </header><!-- end main-header -->
@@ -99,19 +79,19 @@ include('header.php');
                   <!-- desc top -->
                   <div class="row hidden-xs">
                     <div class="col-sm-6  ">
-                      <p><strong class="color-black"><?php echo $search ?></strong></p>
+                      <p><strong class="color-black">All Jobs posted by you</strong></p>
                     </div>
                     
                     <div class="col-xs-4">
                       <p class="text-right">
-                        <strong>Sort by: </strong><strong>Relevance</strong> - <a href="<?php echo 'job_list.php?keyword='.$keyword.'&location='.$location.'&sortby=date' ?>" class="link-black">
+                        <strong>Sort by: </strong><strong>Relevance</strong> - <a href="<?php echo 'my_listings.php?sortby=date' ?>" class="link-black">
                         <strong>Date</strong></a>
                       </p>
                     </div>
                     <div class="col-sm-2">
                       <p class="text-right">
                         <?php $count = mysqli_num_rows($res); 
-                              echo $count.' jobs available';
+                              echo $count.' jobs posted by you';
                         ?>
                       </p>
                     </div>
@@ -119,8 +99,8 @@ include('header.php');
 
                    <?php 
 
-                   if(mysqli_num_rows($res) > 0){
-
+                    if(mysqli_num_rows($res) > 0){
+                    
                     while($row = mysqli_fetch_assoc($res)){
 
                    ?>
@@ -135,9 +115,7 @@ include('header.php');
                           <p class="text-truncate "><?=$row['JobDescription'] ?></p>
                           <div>
                             <span class="color-white-mute"><?=$row['ListingTimeString']?></span> - 
-                            <a href="#need-login" data-toggle="modal" class="btn btn-xs btn-theme btn-default">save job</a> - 
-                            <a href="#modal-email" data-toggle="modal"  class="btn btn-theme btn-xs btn-default">email</a> - 
-                            <a href="#" class="btn btn-theme btn-xs btn-default">more ...</a>
+                            <a href="#need-login" data-toggle="modal" class="btn btn-xs btn-theme btn-default">Delete</a>
                           </div>
                         </div>
                       </div>
@@ -154,8 +132,8 @@ include('header.php');
                       <div class="row">
                         
                         <div class="col-md-12" style="text-align:center">
-                          <h3 class="no-margin-top">No results found<i class=" color-white-mute font-1x"></i></a></h3>
-                          <h5><span class="color-black"> Try refining your query</span></h5>
+                          <h3 class="no-margin-top">No listings found<i class=" color-white-mute font-1x"></i></a></h3>
+                          <h5><span class="color-black"> Try posting some jobs</span></h5>
                         </div>
                       </div>
                     </div><!-- end item list -->
@@ -169,8 +147,6 @@ include('header.php');
           </div>
         </div>
 
-
-
         <!-- modal need login -->
         <div class="modal fade" id="need-login">
           <div class="modal-dialog modal-md">
@@ -178,66 +154,20 @@ include('header.php');
 
               <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" >You must login to save jobs</h4>
+                <h4 class="modal-title" >Are you sure you want to delete this listing?</h4>
               </div>
-              <div class="modal-footer text-center">
-                <a href="#" class="btn btn-default btn-theme" >Login</a>
-                <a href="#" class="btn btn-success btn-theme">Create account (it's free)</a>
+              <div class="modal-footer text-center">   
+                <a button type="button" class="btn btn-default btn-success" data-dismiss="modal">No, take me back</a>
+                <a href="" class="btn btn-default btn-danger" >Yes</a>
               </div>
 
             </div>
           </div>
         </div><!-- end modal  need login -->
 
-
-        <!-- modal need login -->
-        <div class="modal fade" id="modal-email">
-          <div class="modal-dialog modal-md">
-            <div class="modal-content">
-              <form>
-                <div class="modal-header ">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" >Send this job to yourself or a friend:</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label>From my email address</label>
-                    <input type="email" class="form-control "  placeholder="Enter Email">
-                  </div>
-                  <div class="form-group">
-                    <label>To email address</label>
-                    <input type="email" class="form-control "  placeholder="Enter Email">
-                  </div>
-
-                  <div class="form-group">
-                    <label>Comment (optional)</label>
-                    <textarea class="form-control" rows="6" placeholder="Something Comment"></textarea>
-                  </div>
-                  <div class="checkbox flat-checkbox">
-                    <label>
-                      <input type="checkbox"> 
-                      <span class="fa fa-check"></span>
-                      Send a copy to my email address?
-                    </label>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default btn-theme" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-success btn-theme">Send</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div><!-- end modal  need login -->        
-      </div><!--end body-content -->
-
-
       <?php include('footer.php'); ?>
 
     </div><!-- end wrapper page -->
-
-
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="assets/plugins/jquery.js"></script>
@@ -257,3 +187,9 @@ include('header.php');
 
   </body>
 </html>
+
+<?php }
+
+else include('error_not_loggedin.php');
+
+?>
