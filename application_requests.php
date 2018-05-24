@@ -5,9 +5,19 @@ session_start();
 
 if(isset($_SESSION['user'])){
 
-include('header.php');
+    $count;
+    $user = $_SESSION['user'];
+
+    $query = "select * from job_application where ListingId in (select ListingId from job_listing where PosterId = '{$user}')";
+
+    $con = mysqli_connect('localhost', 'root', '', 'jobportal');
+    $res = mysqli_query($con, $query);
+
+    include('header.php');
 
 ?>
+
+
 
         <div class="container">
           <div class="text-center logo"> <a href="index.html"><img src="assets/theme/images/logo.png" alt=""></a></div>
@@ -19,7 +29,6 @@ include('header.php');
       <!-- body-content -->
       <div class="body-content clearfix" >
 
-
         <div class="bg-color1">
           <div class="container">
             <div class="col-md-3 col-sm-3">
@@ -27,7 +36,7 @@ include('header.php');
               <div class="block-section text-center ">
                 <img src="./assets/theme/images/people/4.jpg" class="img-rounded" alt="">
                 <div class="white-space-20"></div>
-                <h4><?php echo $_SESSION['user']?></h4>
+                <h4><?= $user ?></h4>
                 <div class="white-space-20"></div>
                 <ul class="list-unstyled">
                   <li><a href="my_listings.php"> My Listings</a></li>
@@ -41,31 +50,61 @@ include('header.php');
               </div>    </div>
             <div class="col-md-9 col-sm-9">
               <div class="block-section box-side-account">
-                <h3 class="no-margin-top">Notifications</h3>
+                <h3 class="no-margin-top">Application Requests</h3>
                 <hr/>
 
-                <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
-                </div>
-                <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <h4 class="color-heading">Evanto group has invited you to interview test!</h4>
-                  <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
-                  <div class="white-space-10"></div>
-                  <p>
-                    <button type="button" class="btn btn-sm btn-danger btn-theme ">Take this action</button>
-                    <button type="button" class="btn btn-sm btn-default btn-theme">Or do this</button>
-                  </p>
-                </div>
+                <?php if(mysqli_num_rows($res) > 0){ ?>
+
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Applicant Full Name</th>
+                      <th>Applied For</th>
+                      <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                  <?php 
+                    $count = 1; 
+                    while($row = mysqli_fetch_assoc($res)){?>
+
+                     <tr>
+                        <th scope="row"><?= $count; $count++;?></th>
+                        <td><?=$row['FullName']?></td>
+                        <td>
+                          <?php 
+                          $query1 =  "Select JobTitle from job_listing where ListingId = {$row['ListingId']}";
+                          $res1 = mysqli_query($con, $query1);
+                          $row1 = mysqli_fetch_assoc($res1);
+                          echo $row1['JobTitle'];
+                          ?>
+                        
+                        </td>
+                        <td class="text-right"><a href="#" class="btn btn-theme btn-xs btn-default">Remove</a></td>
+                      </tr>
+                  
+                  <?php } ?>
+
+                  </tbody>
+                </table>
+              </div>
+
+              <?php }
+              else echo 'No requests found!';
+              ?>
+                
+
               </div>
             </div>
           </div>
         </div>        
       </div><!--end body-content -->
 
-
-      <?php include('footer.php'); ?>
+    <?php include('footer.php'); ?>
 
     </div><!-- end wrapper page -->
 
@@ -91,10 +130,9 @@ include('header.php');
   </body>
 </html>
 
-<?php } 
 
-else{
-  include('error_not_loggedin.php');
-}
+<?php }
+
+else include('error_not_loggedin.php');
 
 ?>
