@@ -46,7 +46,7 @@ if(isset($_SESSION['user'])){
                 </ul>
                 <div class="white-space-20"></div>
                 <a href="job_post_2.php" class="btn  btn-line soft btn-theme btn-pill btn-block">Post a Job</a>
-                <a href="#" class="btn  btn-line soft  btn-theme btn-pill btn-block">Build Resume</a>
+                <a href="resume_post.php" class="btn  btn-line soft  btn-theme btn-pill btn-block">Build Resume</a>
               </div>    </div>
             <div class="col-md-9 col-sm-9">
               <div class="block-section box-side-account">

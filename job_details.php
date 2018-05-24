@@ -229,7 +229,7 @@ else{
                   <div class="job-meta">
                     <ul class="list-inline">
                       <li><i class="fa fa-briefcase"></i> Contract Full-Time</li>
-                      <li><i class="fa fa-map-marker"></i> San Diego, CA</li>
+                      <li><i class="fa fa-map-marker"></i> <?= $row['Location']?></li>
                       <li><i class="fa fa-money">
                       <?php   
                       if($row['Salary']!=null)
@@ -288,24 +288,6 @@ else{
             </div>
           </div>
         </div>
-
-        <!-- block map -->
-        <div class="collapse" id="map-toogle">
-          <div class=" bg-color2" id="map-area">
-            <div class="container">
-              <div class="marker-description">
-                <div class="inner">
-                  <h4 class="no-margin-top">Office Location</h4>
-                  Central Jakarta No 1234, Jakarta, Indonesia
-                </div>
-              </div>
-            </div>
-            <div class="map-area-detail">
-              <!-- change data  lat abd lng here -->
-              <div class="box-map-detail" id="map-detail-job" data-lat="48.856318" data-lng="2.351866"></div>
-            </div>
-          </div>
-        </div><!-- end block map -->
 
 
 

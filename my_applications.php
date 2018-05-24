@@ -80,8 +80,10 @@ if(isset($_SESSION['user'])){
                     
                     <div class="col-xs-4">
                       <p class="text-right">
-                        <strong>Sort by: </strong><strong>Relevance</strong> - <a href="<?php echo 'my_applications.php?sortby=date' ?>" class="link-black">
-                        <strong>Date</strong></a>
+                        <strong>Sort by: </strong>
+                        <a href="my_applications.php" class="<?php if(!(isset($_GET['sortby'])))echo 'link-black'; else echo'color-white-mute'?>"><strong>Relevance</strong></a>
+                        - 
+                        <a href="my_applications.php?sortby=date" class="<?php if(isset($_GET['sortby']))echo 'link-black'; else echo'color-white-mute'?>"><strong>Date</strong></a>
                       </p>
                     </div>
                     <div class="col-sm-2">
@@ -143,23 +145,6 @@ if(isset($_SESSION['user'])){
           </div>
         </div>
 
-        <!-- modal need login -->
-        <div class="modal fade" id="need-login">
-          <div class="modal-dialog modal-md">
-            <div class="modal-content">
-
-              <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" >Are you sure you want to delete this listing?</h4>
-              </div>
-              <div class="modal-footer text-center">   
-                <a button type="button" class="btn btn-default btn-success" data-dismiss="modal">No, take me back</a>
-                <a href="" class="btn btn-default btn-danger" >Yes</a>
-              </div>
-
-            </div>
-          </div>
-        </div><!-- end modal  need login -->
 
       <?php include('footer.php'); ?>
 
