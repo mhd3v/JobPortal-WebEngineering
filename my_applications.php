@@ -6,12 +6,11 @@ session_start();
 if(isset($_SESSION['user'])){
 
     $count;
-
     $user = $_SESSION['user'];
-    $query = "select * from job_listing where PosterId = '{$user}'";
+    $query = "select * from job_listing AS T1 INNER JOIN (select * from job_application where CandidateUserName = '{$user}') AS T2 ON T1.ListingId=T2.ListingId";
 
-    if((isset($_GET['sortby'])))
-        $query = $query.' ORDER BY ListingTime';
+    if(isset($_GET['sortby']))
+      $query = $query.' ORDER BY ListingTime';
 
     $con = mysqli_connect('localhost', 'root', '', 'jobportal');
     $res = mysqli_query($con, $query);
@@ -76,19 +75,19 @@ if(isset($_SESSION['user'])){
                   <!-- desc top -->
                   <div class="row hidden-xs">
                     <div class="col-sm-6  ">
-                      <p><strong class="color-black">All Jobs posted by you</strong></p>
+                      <p><strong class="color-black">All your applications</strong></p>
                     </div>
                     
                     <div class="col-xs-4">
                       <p class="text-right">
-                        <strong>Sort by: </strong><strong>Relevance</strong> - <a href="<?php echo 'my_listings.php?sortby=date' ?>" class="link-black">
+                        <strong>Sort by: </strong><strong>Relevance</strong> - <a href="<?php echo 'my_applications.php?sortby=date' ?>" class="link-black">
                         <strong>Date</strong></a>
                       </p>
                     </div>
                     <div class="col-sm-2">
                       <p class="text-right">
                         <?php $count = mysqli_num_rows($res); 
-                              echo $count.' jobs posted by you';
+                              echo $count.' jobs you&apos;ve applied to';
                         ?>
                       </p>
                     </div>
@@ -129,8 +128,8 @@ if(isset($_SESSION['user'])){
                       <div class="row">
                         
                         <div class="col-md-12" style="text-align:center">
-                          <h3 class="no-margin-top">No listings found<i class=" color-white-mute font-1x"></i></a></h3>
-                          <h5><span class="color-black"> Try posting some jobs</span></h5>
+                          <h3 class="no-margin-top">No applications found<i class=" color-white-mute font-1x"></i></a></h3>
+                          <h5><span class="color-black"> Try applying to some jobs</span></h5>
                         </div>
                       </div>
                     </div><!-- end item list -->
