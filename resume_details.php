@@ -68,6 +68,8 @@ include('header.php');
       <!-- body-content -->
       <div class="body-content clearfix" >
 
+        <?php if(mysqli_num_rows($res) == 1){ ?>
+
         <!-- link top -->
         <div class="bg-color2 block-section-xs line-bottom">
           <div class="container">
@@ -124,10 +126,28 @@ include('header.php');
                 </div><!-- box affix right -->
 
               </div>
+
+              <?php }
+
+              else{ ?>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12" style= "text-align:center">
+                
+                    <h2><strong><?= "No resume set for this user!"?></strong></h2>
+    
+                  </div>
+                </div>
+            </div>
+              
+              <?php } ?>
+
+
             </div>
           </div>
         </div>
 
+      
 
       </div><!--end body-content -->
 

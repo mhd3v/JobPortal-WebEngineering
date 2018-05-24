@@ -5,6 +5,8 @@ session_start();
 
 if(isset($_SESSION['user'])){
 
+$user = $_SESSION['user'];
+
 include('header.php');
 
 ?>
@@ -44,19 +46,38 @@ include('header.php');
                 <h3 class="no-margin-top">Notifications</h3>
                 <hr/>
 
-                <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
-                </div>
-                <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <h4 class="color-heading">Evanto group has invited you to interview test!</h4>
-                  <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
-                  <div class="white-space-10"></div>
-                  <p>
-                    <button type="button" class="btn btn-sm btn-danger btn-theme ">Take this action</button>
-                    <button type="button" class="btn btn-sm btn-default btn-theme">Or do this</button>
-                  </p>
+                <?php 
+                    
+                    $con = mysqli_connect('localhost', 'root', '', 'jobportal');
+                    $query = "select * from interview where CandidateId = '{$user}'";
+                    $res = mysqli_query($con, $query);
+                    if(mysqli_num_rows($res) > 0 ){
+                      while($row = mysqli_fetch_assoc($res)){ ?>
+
+                      <div class="alert alert-success alert-dismissible fade in" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      <h4 class="color-heading">
+                        
+                        <?= $row['EmployerFullName'].' from '.$row['CompanyName']. ' has called you for an interview';?>
+
+                      </h4>
+                      <p><?= $row['Message']?></p>
+                      <div class="white-space-10"></div>
+
+                <?php }
+                    }
+
+                    else{ ?>
+
+                    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      <strong>No new notifications!</strong><p> Check back again some other time.</p>
+                    </div>
+
+
+                    <?php } ?>
+                
+                  
                 </div>
               </div>
             </div>
