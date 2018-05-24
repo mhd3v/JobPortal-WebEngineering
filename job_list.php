@@ -9,9 +9,6 @@ if(isset($_GET['keyword']) && $_GET['keyword'] != "" && isset($_GET['location'])
   $search = $keyword." listings in ".$location;
   
   $query = "select * from job_listing where (JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%') AND Location LIKE '%{$location}%'";
-
-  if(isset($_GET['sortby']))
-    $query = $query." ORDER BY ListingTime";
 }
   
 else if(isset($_GET['keyword']) && $_GET['keyword'] != ""){
@@ -20,9 +17,6 @@ else if(isset($_GET['keyword']) && $_GET['keyword'] != ""){
   $search = $keyword." listings Worldwide";
 
   $query = "select * from job_listing where JobTitle LIKE '%{$keyword}%' OR Company LIKE '%{$keyword}%'";
-
-  if(isset($_GET['sortby']))
-    $query = $query." ORDER BY ListingTime";
 }
 
 else if(isset($_GET['location']) && $_GET['location'] != ""){
@@ -31,10 +25,15 @@ else if(isset($_GET['location']) && $_GET['location'] != ""){
   $search = "All listings in ".$location;
 
   $query = "select * from job_listing where Location LIKE '%{$location}%'";
-  
-  if(isset($_GET['sortby']))
-    $query = $query." ORDER BY ListingTime";
 }
+
+else{
+  $search = "Since your query was empty, showing all available jobs";
+  $query = "Select * from job_listing";
+}
+
+if(isset($_GET['sortby']))
+    $query = $query." ORDER BY ListingTime";
 
 $con = mysqli_connect('localhost', 'root', '', 'jobportal');
                   
