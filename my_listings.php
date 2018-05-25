@@ -117,7 +117,7 @@ if(isset($_SESSION['user'])){
                           <p class="text-truncate "><?=$row['JobDescription'] ?></p>
                           <div>
                             <span class="color-white-mute"><?=$row['ListingTimeString']?></span> - 
-                            <a href="#need-login" data-toggle="modal" class="btn btn-xs btn-theme btn-default">Delete</a>
+                            <a href="#modal-delete" data-toggle="modal" data-value="<?=$row['ListingId']?>" class="btn btn-xs btn-theme btn-default deletebutton">Delete</a>
                           </div>
                         </div>
                       </div>
@@ -144,6 +144,50 @@ if(isset($_SESSION['user'])){
                   <?php }?>
 
               </div>
+
+                    <!-- modal delete -->
+              <div class="modal fade" id="modal-delete">
+                  <div class="modal-dialog ">
+                    <div class="modal-content">
+
+                      <form id="deleteform" method="post">
+                        <div class="modal-header ">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" >Are you sure you want to delete this listing?</h4>
+                        </div>
+                        
+                          
+                          <input type="checkbox" class="listingid" name="listingid" style="display:none" checked="true">
+                          
+                          
+                          <div id="applyerror" class="alert alert-danger" style="display: none"></div>
+                        
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default btn-theme" data-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-success btn-theme">Yes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div><!-- end modal  apply -->    
+
+                <!-- modal success -->
+                <div class="modal fade" id="modal-success">
+                        <div class="modal-dialog modal-md">
+                          <div class="modal-content">
+
+                            <div class="modal-header text-center">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title" >Listing deleted!</h4>
+                            </div>
+                            <div class="modal-footer text-center">
+                              <a href="my_listings.php" class="btn btn-default btn-theme" >Okay</a>
+                            </div>
+
+                          </div>
+                        </div>
+                </div><!-- end modal success -->
           
             </div>
           </div>
@@ -168,6 +212,52 @@ if(isset($_SESSION['user'])){
     <script src="assets/plugins/gmap3.min.js"></script>
     <!-- maps single marker -->
     <script src="assets/theme/js/map-detail.js"></script>
+
+    <script>
+
+    $(document).ready(function(){
+
+      $(function (){
+        $('.deletebutton').on('click', function (e) {
+          var listingid =  $(this).data("value");
+          $(".listingid").val(listingid);
+          
+        });
+      });
+
+      $(function () {
+
+        $('#deleteform').on('submit', function (e) {
+
+          e.preventDefault();
+
+          $.ajax({
+            type: 'post',
+            url: 'delete/delete_listing.php',
+            data: $('form').serialize(),
+            success: function (data) {
+
+              if(data == "success"){
+                $("#modal-delete").modal('hide');
+                $("#modal-success").modal('show');
+              }
+
+                
+              else{
+                $("#applyerror").show();
+                $("#applyerror").html(data);              
+              }
+
+            }
+          });
+
+        });
+
+      });
+
+      });
+
+</script>
 
   </body>
 </html>

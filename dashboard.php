@@ -63,7 +63,7 @@ include('header.php');
                       </h4>
                       <p><?= $row['Message']?></p>
                       <div class="white-space-10"></div>
-
+                      </div>
                 <?php }
                     }
 
@@ -78,7 +78,7 @@ include('header.php');
                     <?php } ?>
                 
                   
-                </div>
+                
               </div>
             </div>
           </div>
@@ -89,9 +89,6 @@ include('header.php');
       <?php include('footer.php'); ?>
 
     </div><!-- end wrapper page -->
-
-
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="assets/plugins/jquery.js"></script>

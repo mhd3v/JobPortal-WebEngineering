@@ -21,20 +21,17 @@ include('header.php');
               <div class="panel-body">
                 <div class="row">
                   <div class="col-md-12">
-                    <!-- buttons top -->
-                    <p><a href="#" class="btn btn-primary btn-theme btn-block"><i class="fa fa-facebook pull-left bordered-right"></i> Login with Facebook</a></p>
-                    <p><a href="#" class="btn btn-danger btn-theme btn-block"><i class="fa fa-google-plus pull-left bordered-right"></i> Login with Google</a></p>
-                    <!-- end buttons top -->
+                   
 
                     <div class="white-space-10"></div>
-                    <p class="text-center"><span class="span-line">OR</span></p>
+                    <p class="text-center"><span class="span-line">Login</span></p>
 
                     <!-- form login -->
                     <form method="post" id="loginform">
 
                       <?php
                       if(isset($_SESSION['signup'])){ 
-                        session_unset($_SESSION['signup']);
+                        session_unset();
                       ?>
 
                       <div class="form-group">
@@ -79,7 +76,7 @@ include('header.php');
             </div>
 
             <div class="white-space-20"></div>
-            <div class="text-center color-white">Not a member? &nbsp; <a href="#" class="link-white"><strong>Create an account free</strong></a></div>
+            <div class="text-center color-white">Not a member? &nbsp; <a href="register.php" class="link-white"><strong>Create an account free</strong></a></div>
           </div>
         </div>
 

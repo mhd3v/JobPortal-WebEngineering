@@ -124,7 +124,7 @@ include('header.php');
         $('#changepass-form').on('submit', function (e) {
 
           e.preventDefault();
-
+        
           $.ajax({
             type: 'post',
             url: 'insert/insert_newpass.php',
@@ -138,10 +138,6 @@ include('header.php');
                 $("#error").html(data);
                 $("#error").show();
               }
-              
-
-
-
             }
           });
 

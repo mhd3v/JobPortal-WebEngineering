@@ -25,8 +25,11 @@ if(isset($_SESSION['user'])){
           <div class="row">
 
             <div class="col-md-4">
-              <!-- logo -->
-              <div class="logo text-center-sm"> <a href="index.php"><img src="assets/theme/images/logo.png" alt=""></a></div>
+              <div class="logo text-center-sm inline"> <a href="index.php">
+                  <img src="assets/theme/images/logo.png" alt=""> 
+                  <div class="label-add">My applications</div>
+                </a>
+              </div>
             </div>
 
             <div class="col-md-8">
@@ -99,7 +102,7 @@ if(isset($_SESSION['user'])){
 
                     if(mysqli_num_rows($res) > 0){
                     
-                    while($row = mysqli_fetch_assoc($res)){
+                      while($row = mysqli_fetch_assoc($res)){
 
                    ?>
                    <!-- item list -->  
@@ -113,7 +116,7 @@ if(isset($_SESSION['user'])){
                           <p class="text-truncate "><?=$row['JobDescription'] ?></p>
                           <div>
                             <span class="color-white-mute"><?=$row['ListingTimeString']?></span> - 
-                            <a href="#need-login" data-toggle="modal" class="btn btn-xs btn-theme btn-default">Delete</a>
+                            <a href="#modal-delete" data-toggle="modal" data-value="<?=$row['ApplicationId']?>" class="btn btn-xs btn-theme btn-default deletebutton">Delete</a>
                           </div>
                         </div>
                       </div>
@@ -140,6 +143,48 @@ if(isset($_SESSION['user'])){
                   <?php }?>
 
               </div>
+
+                    <!-- modal delete -->
+                <div class="modal fade" id="modal-delete">
+                  <div class="modal-dialog ">
+                    <div class="modal-content">
+
+                      <form id="deleteform" method="post">
+                        <div class="modal-header ">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" >Are you sure you want to delete this application?</h4>
+                        </div>
+                        
+                          <input type="checkbox" class="appid" name="appid" style="display:none" checked="true">
+                          
+                          <div id="applyerror" class="alert alert-danger" style="display: none"></div>
+                        
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default btn-theme" data-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-success btn-theme">Yes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div><!-- end modal  apply -->    
+
+                <!-- modal success -->
+                <div class="modal fade" id="modal-success">
+                        <div class="modal-dialog modal-md">
+                          <div class="modal-content">
+
+                            <div class="modal-header text-center">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title" >Application deleted!</h4>
+                            </div>
+                            <div class="modal-footer text-center">
+                              <a href="my_applications.php" class="btn btn-default btn-theme" >Okay</a>
+                            </div>
+
+                          </div>
+                        </div>
+                </div><!-- end modal success -->
           
             </div>
           </div>
@@ -166,7 +211,57 @@ if(isset($_SESSION['user'])){
     <!-- maps single marker -->
     <script src="assets/theme/js/map-detail.js"></script>
 
-  </body>
+        
+    <script>
+
+    $(document).ready(function(){
+
+
+    $(function (){
+      $('.deletebutton').on('click', function (e) {
+        var applicationid =  $(this).data("value");
+        $(".appid").val(applicationid);
+        
+      });
+    });
+
+    $(function () {
+
+      $('#deleteform').on('submit', function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+          type: 'post',
+          url: 'delete/delete_application.php',
+          data: $('#deleteform').serialize(),
+          success: function (data) {
+
+            if(data == "success"){
+              $("#modal-delete").modal('hide');
+              $("#modal-success").modal('show');
+            }
+
+              
+            else{
+              $("#applyerror").show();
+              $("#applyerror").html(data);              
+            }
+
+          }
+        });
+
+      });
+
+    });
+
+    });
+
+    </script>
+
+</body>
+
+
 </html>
 
 <?php }

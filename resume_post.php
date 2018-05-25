@@ -103,7 +103,7 @@ include('header.php');
                       </div>
                       <div class="modal-footer text-center">
                         <a href="dashboard.php" class="btn btn-default btn-theme" >Go to dashboard</a>
-                        <a href="resume_details.php" class="btn btn-success btn-theme">View Resume</a>
+                        
                       </div>
 
                     </div>

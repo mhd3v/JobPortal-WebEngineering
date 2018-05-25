@@ -4,31 +4,30 @@ include('header.php');
 
 $con = mysqli_connect('localhost', 'root', '', 'jobportal');
 
-$user; $applytext; $appplied = false;
+$user; $applytext; $applied = false;
 
 if(session_status() == PHP_SESSION_NONE) 
 session_start();
 
-if(isset($_SESSION['user']))
-$user = $_SESSION['user'];
+if(isset($_SESSION['user'])){
 
-else
-echo "You need to be logged in to apply!";
+  $user = $_SESSION['user'];
+  $listingid = (int)$_GET['lid'];
 
-$listingid = (int)$_GET['lid'];
+  $query = "select * from job_application where CandidateUserName = '{$user}' and ListingId = {$listingid}";
 
-$query = "select * from job_application where CandidateUserName = '{$user}' and ListingId = {$listingid}";
+  $res = mysqli_query($con, $query);
 
-$res = mysqli_query($con, $query);
-
-if(mysqli_num_rows($res) == 0)
-$applytext  = "Apply for this job";
-else{
-  $appplied = true;
-  $applytext  = "Already Applied";
+  if(mysqli_num_rows($res) == 0)
+  $applytext  = "Apply for this job";
+  else{
+    $applied = true;
+    $applytext  = "Already Applied";
+  }
 }
 
-
+else
+$applytext = "Login to apply!";
 
 ?>
 
@@ -68,7 +67,7 @@ else{
                     </div>
                   </div>
                 </div>
-                <p class="text-right"><a href="#modal-advanced" data-toggle="modal" class="link-white">Advanced Search</a></p>
+                
               </form>  <!-- form search -->
             </div>
 
@@ -122,6 +121,7 @@ else{
                     <div class="col-md-8">
                       <!-- <a href="company_page.html"><img src="./assets/theme/images/patner/4.png" alt=""></a> -->
                       <h4><span class="color-black"> <?=$row['Company'] ?> </span> <span class="color-white-mute"><?=$row['Location'] ?></span></h4>
+                      <h5><span class="color-black"> Posted by: <span class="color-white-mute"><?=$row['PosterId'] ?></span> </span></h5>
                     </div>
                     
                   </div>
@@ -157,15 +157,14 @@ else{
                     
                     href="<?php  
 
-                    if($appplied)
-                    
-                    echo '#already-applied';
+                    if($applied)
+                      echo '#already-applied';
 
-                    else if(isset($user))
-                    echo '#modal-apply';
+                    else if(isset($user) && !($applied))
+                      echo '#modal-apply';
 
-                    else
-                    echo '#modal-login';
+                    else if(!(isset($user)))
+                      echo '#modal-login';
                     
                     ?>"
                     
@@ -219,7 +218,7 @@ else{
         </div><!-- end modal  apply -->      
         
         <!-- modal need login -->
-        <div class="modal fade" id="need-login">
+        <div class="modal fade" id="modal-login">
           <div class="modal-dialog modal-md">
             <div class="modal-content">
 

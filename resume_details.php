@@ -78,7 +78,7 @@ include('header.php');
                 <div>Resume details :</div>
               </div>
               <div class="col-sm-6">
-                <div class="text-right"><a href="#">&laquo; Go back to resume listings</a></div>
+                <div class="text-right"><a href="resume_list.php">&laquo; Go back to resume listings</a></div>
               </div>
             </div>
           </div>
@@ -119,7 +119,7 @@ include('header.php');
                 <!-- box affix right -->
                 <div class="block-section " id="affix-box">
                   <div class="text-right">
-                    <p><a href="#" class="btn btn-theme btn-line dark btn-block-xs">Save Resume</a></p>
+                    
                     <p>Updated: <?= $row['ListingTimeString']?></p>
                     
                   </div>

@@ -220,6 +220,10 @@ include('header.php');
                   </div>
                   <p>Applications will be emailed to: <a href="#">your@email.com</a> – <a href="#">change email</a></p>
 
+                  <div id="error" class="form-group alert alert-danger" style="display:none">
+                    
+                  </div>
+
                   <div class="form-group ">
                     <input type="submit" class="btn btn-t-primary btn-theme" value="Submit">
                   </div>
@@ -227,6 +231,23 @@ include('header.php');
 
                 </form> <!-- end form post a job -->
               </div>
+
+               <!-- modal success -->
+              <div class="modal fade" id="modal-success">
+                      <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+
+                          <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" >Successfully posted!</h4>
+                          </div>
+                          <div class="modal-footer text-center">
+                            <a href="dashboard.php" class="btn btn-default btn-theme" >Okay</a>
+                          </div>
+
+                        </div>
+                      </div>
+              </div><!-- end modal success -->
             </div>
           </div>
         </div>        
@@ -271,7 +292,15 @@ include('header.php');
             url: 'insert/insert_job.php',
             data: $('form').serialize(),
             success: function (data) {
-              alert(data);
+
+              if(data == "success")
+                $("#modal-success").modal('show');
+            
+            else{
+              $("#error").show();
+              $("#error").html(data);              
+            }
+
             }
           });
 

@@ -160,7 +160,7 @@ if(isset($_SESSION['user'])){
                     </div>
                     
                   <div class="form-group">
-                    <label>Message (option)</label>
+                    <label>Message (optional)</label>
                     <textarea name="message" class="form-control" rows="6" placeholder="Write you message here"></textarea>
                   </div>
 
@@ -176,7 +176,7 @@ if(isset($_SESSION['user'])){
             </div>
           </div><!-- end modal  apply -->    
 
-          <!-- modal need success -->
+          <!-- modal success -->
           <div class="modal fade" id="modal-success">
                   <div class="modal-dialog modal-md">
                     <div class="modal-content">
@@ -191,7 +191,7 @@ if(isset($_SESSION['user'])){
 
                     </div>
                   </div>
-          </div><!-- end modal  need success -->
+          </div><!-- end modal success -->
 
       </div>
     </div>        
