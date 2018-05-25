@@ -1,163 +1,15 @@
-<!DOCTYPE html>
-<html lang="en" >
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<?php
 
-    <title>Jobplanet - Responsive Job Board HTML Template </title>
+if(session_status() == PHP_SESSION_NONE) 
+session_start();
 
-    <!--favicon-->
-    <link rel="apple-touch-icon" href="assets/theme/images/apple-touch-icon.png">
-    <link rel="shortcut icon" href="assets/theme/images/favicon.ico" type="image/x-icon">
+if(isset($_SESSION['user'])){
 
-    <!-- bootstrap -->
-    <link href="assets/plugins/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet">
+$user = $_SESSION['user'];
 
-    <!-- Icons -->
-    <link href="assets/plugins/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
+include('header.php');
 
-    <!-- lightbox -->
-    <link href="assets/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
-
-
-    <!-- Themes styles-->
-    <link href="assets/theme/css/theme.css" rel="stylesheet">  
-    <!-- Your custom css -->
-    <link href="assets/theme/css/theme-custom.css" rel="stylesheet">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>  
-  <body>
-    <!-- wrapper page -->
-    <div class="wrapper">
-      <!-- main-header -->
-      <header class="main-header">
-
-
-        <!-- main navbar -->
-        <nav class="navbar navbar-default main-navbar hidden-sm hidden-xs">
-          <div class="container">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-              <ul class="nav navbar-nav">
-                <li class=""><a href="job_list.html"><strong>Find a Job</strong></a></li>
-                <li class=""><a href="resume_list.html"><strong>Find Resumes</strong></a></li>
-                <li  class=""><a href="job_post_1.html"><strong>Post a Job</strong></a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >Pages <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="blog.html">Articles &amp; Blog</a></li>
-                    <li><a href="terms_privacy.html">Terms &amp; Privacy</a></li>
-                    <li><a href="error_404.html">Error 404</a></li>
-                    <li><a href="shortcode.html">Short Code</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >Features <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="job_list.html">Find a Job</a></li>
-                    <li><a href="job_details.html">Job Details</a></li>
-                    <li><a href="resume_list.html">Find Resumes</a></li>
-                    <li><a href="resume_details.html">Resume Details</a></li>
-                    <li><a href="job_post_2.html">Post a Job</a></li>
-                    <li><a href="company_page.html">Company Profile</a></li>
-                  </ul>
-                </li>
-              </ul>      
-              <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                  <a href="#" class="link-profile dropdown-toggle"  data-toggle="dropdown" >
-                    <img src="assets/theme/images/people/4.jpg" alt="" class="img-profile"> &nbsp; Jhon <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="my_alerts.html"> My Alerts </a></li>
-                    <li><a href="my_notifications.html"> Notifications <span class="badge ">5</span></a></li>
-                    <li><a href="change_password.html"> Change Password</a></li>
-                  </ul>
-                </li>
-                <li class="link-btn"><a href="index.html"><span class="btn btn-theme  btn-pill btn-xs btn-line">Logout</span></a></li>
-              </ul>
-            </div>
-          </div>
-        </nav><!-- end main navbar -->
-
-        <!-- mobile navbar -->
-        <div class="container">
-          <nav class="mobile-nav hidden-md hidden-lg">
-
-            <ul class="nav navbar-nav nav-block-left">
-              <li class="dropdown">
-                <a href="#" class="link-profile dropdown-toggle"  data-toggle="dropdown" >
-                  <img src="assets/theme/images/people/4.jpg" alt="" class="img-profile"> &nbsp; Jhon <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="my_alerts.html"> My Alerts </a></li>
-                  <li><a href="my_notifications.html"> Notifications <span class="badge ">5</span></a></li>
-                  <li><a href="change_password.html"> Change Password</a></li>
-                  <li><a href="index.html"> Logout</a></li>
-                </ul>
-              </li>
-            </ul>
-
-
-            <a href="#" class="btn-nav-toogle first">
-              <span class="bars"></span>
-              Menu
-            </a>
-            <div class="mobile-nav-block">
-              <h4>Navigation</h4>
-              <a href="#" class="btn-nav-toogle">
-                <span class="barsclose"></span>
-                Close
-              </a> 
-
-              <ul class="nav navbar-nav">
-                <li class=""><a href="job_list.html"><strong>Find a Job</strong></a></li>
-                <li class=""><a href="resume_list.html"><strong>Find Resumes</strong></a></li>
-                <li  class=""><a href="job_post_1.html"><strong>Post a Job</strong></a></li>
-                <li><a href="login.html"><strong>Login</strong></a></li>
-                <li><a href="register.html"><strong>Register</strong></a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >Pages <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="blog.html">Articles &amp; Blog</a></li>
-                    <li><a href="terms_privacy.html">Terms &amp; Privacy</a></li>
-                    <li><a href="error_404.html">Error 404</a></li>
-                    <li><a href="shortcode.html">Short Code</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >Features <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="job_list.html">Find a Job</a></li>
-                    <li><a href="job_details.html">Job Details</a></li>
-                    <li><a href="resume_list.html">Find Resumes</a></li>
-                    <li><a href="resume_details.html">Resume Details</a></li>
-                    <li><a href="job_post_2.html">Post a Job</a></li>
-                    <li><a href="company_page.html">Company Profile</a></li>
-                  </ul>
-                </li>
-              </ul>      
-            </div>
-          </nav>
-        </div><!-- mobile navbar -->
-
-
-        <div class="container">
-          <div class="text-center logo"> <a href="index.html"><img src="assets/theme/images/logo.png" alt=""></a></div>
-        </div>
-
+?>
       </header><!-- end main-header -->
 
 
@@ -171,17 +23,17 @@
               <div class="block-section text-center ">
                 <img src="./assets/theme/images/people/4.jpg" class="img-rounded" alt="">
                 <div class="white-space-20"></div>
-                <h4>Jhone Doe</h4>
+                <h4><?= $user?></h4>
                 <div class="white-space-20"></div>
                 <ul class="list-unstyled">
-                  <li><a href="my_alerts.html"> My Alerts </a></li>
-                  <li><a href="my_notifications.html"> Notifications (5)</a></li>
-                  <li><a href="change_password.html"> Change Password</a></li>
-
+                  <li><a href="my_listings.php"> My Listings</a></li>
+                  <li><a href="my_applications.php"> My Applications</a></li>
+                  <li><a href="change_password.php"> Change Password</a></li>
+                  <li><a href="application_requests.php"> Application Requests </a></li>
                 </ul>
                 <div class="white-space-20"></div>
-                <a href="#" class="btn  btn-line soft btn-theme btn-pill btn-block">Post a Job</a>
-                <a href="#" class="btn  btn-line soft  btn-theme btn-pill btn-block">Build Resume</a>
+                <a href="job_post_2.php" class="btn  btn-line soft btn-theme btn-pill btn-block">Post a Job</a>
+                <a href="job_list.php" class="btn  btn-line soft  btn-theme btn-pill btn-block">Build Resume</a>
               </div>    </div>
             <div class="col-md-9 col-sm-9">
               <!-- Block side right -->
@@ -190,25 +42,49 @@
                 <hr/>
                 <div class="row">
                   <div class="col-md-7">
-                    <form>
+
+                    <form id="changepass-form" method="POST">
                       <div class="form-group">
                         <label>Old Password</label>
-                        <input type="password" class="form-control">
+                        <input name="oldpass" type="password" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>New Password</label>
-                        <input type="password" class="form-control">
+                        <input name="newpass" type="password" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Re-type New Password</label>
-                        <input type="password" class="form-control">
+                        <input name="cnewpass" type="password" class="form-control">
                       </div>
+
+                      <div id="error" style="display:none" class="form-group alert alert-danger">
+                      </div>
+          
                       <div class="form-group">
                         <button type="submit" class="btn btn-theme btn-t-primary">Change Password</button>
                       </div>
+
                     </form>
                   </div>
                 </div>
+
+                <!-- modal need success -->
+                <div class="modal fade" id="modal-success">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+
+                      <div class="modal-header text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" >Your password was updated successfully</h4>
+                      </div>
+                      <div class="modal-footer text-center">
+                        <a href="dashboard.php" class="btn btn-default btn-theme" >Go to dashboard</a>
+                      </div>
+
+                    </div>
+                  </div>
+                </div><!-- end modal  need success -->
+
               </div><!-- end Block side right -->
             </div>
           </div>
@@ -216,32 +92,7 @@
       </div><!--end body-content -->
 
 
-      <!-- main-footer -->
-      <footer class="main-footer">
-
-
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6">
-              <ul class="list-inline link-footer text-center-xs">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-              </ul>
-            </div>
-            <div class="col-sm-6 ">
-              <p class="text-center-xs hidden-lg hidden-md hidden-sm">Stay Connect</p>
-              <div class="socials text-right text-center-xs">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-youtube-play"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer><!-- end main-footer -->
+      <?php include('footer.php'); ?>
 
     </div><!-- end wrapper page -->
 
@@ -264,5 +115,47 @@
     <!-- maps single marker -->
     <script src="assets/theme/js/map-detail.js"></script>
 
+    <script>
+
+      $(document).ready(function(){
+
+      $(function () {
+
+        $('#changepass-form').on('submit', function (e) {
+
+          e.preventDefault();
+        
+          $.ajax({
+            type: 'post',
+            url: 'insert/insert_newpass.php',
+            data: $('#changepass-form').serialize(),
+            success: function (data) {
+
+              if(data == 'success')
+                $('#modal-success').modal('show');
+              
+              else{
+                $("#error").html(data);
+                $("#error").show();
+              }
+            }
+          });
+
+        });
+
+      });
+
+      });
+
+
+    </script>
+
   </body>
 </html>
+
+<?php } 
+
+else
+include ('error_not_loggedin.php');
+
+?>

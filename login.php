@@ -21,20 +21,17 @@ include('header.php');
               <div class="panel-body">
                 <div class="row">
                   <div class="col-md-12">
-                    <!-- buttons top -->
-                    <p><a href="#" class="btn btn-primary btn-theme btn-block"><i class="fa fa-facebook pull-left bordered-right"></i> Login with Facebook</a></p>
-                    <p><a href="#" class="btn btn-danger btn-theme btn-block"><i class="fa fa-google-plus pull-left bordered-right"></i> Login with Google</a></p>
-                    <!-- end buttons top -->
+                   
 
                     <div class="white-space-10"></div>
-                    <p class="text-center"><span class="span-line">OR</span></p>
+                    <p class="text-center"><span class="span-line">Login</span></p>
 
                     <!-- form login -->
                     <form method="post" id="loginform">
 
                       <?php
                       if(isset($_SESSION['signup'])){ 
-                        session_unset($_SESSION['signup']);
+                        session_unset();
                       ?>
 
                       <div class="form-group">
@@ -79,7 +76,7 @@ include('header.php');
             </div>
 
             <div class="white-space-20"></div>
-            <div class="text-center color-white">Not a member? &nbsp; <a href="#" class="link-white"><strong>Create an account free</strong></a></div>
+            <div class="text-center color-white">Not a member? &nbsp; <a href="register.php" class="link-white"><strong>Create an account free</strong></a></div>
           </div>
         </div>
 
@@ -122,32 +119,7 @@ include('header.php');
       </div><!--end body-content -->
 
 
-      <!-- main-footer -->
-      <footer class="main-footer">
-
-
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6">
-              <ul class="list-inline link-footer text-center-xs">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="blog.php">Blog</a></li>
-                <li><a href="about.php">About Us</a></li>
-                <li><a href="contact.php">Contact Us</a></li>
-              </ul>
-            </div>
-            <div class="col-sm-6 ">
-              <p class="text-center-xs hidden-lg hidden-md hidden-sm">Stay Connect</p>
-              <div class="socials text-right text-center-xs">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-youtube-play"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer><!-- end main-footer -->
+      <?php include('footer.php'); ?>
 
     </div><!-- end wrapper page -->
 

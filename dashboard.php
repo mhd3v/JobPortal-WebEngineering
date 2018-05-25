@@ -5,6 +5,8 @@ session_start();
 
 if(isset($_SESSION['user'])){
 
+$user = $_SESSION['user'];
+
 include('header.php');
 
 ?>
@@ -30,34 +32,53 @@ include('header.php');
                 <h4><?php echo $_SESSION['user']?></h4>
                 <div class="white-space-20"></div>
                 <ul class="list-unstyled">
-                  <li><a href="my_alerts.php"> My Alerts </a></li>
-                  <li><a href="my_notifications.php"> Notifications (5)</a></li>
+                  <li><a href="my_listings.php"> My Listings</a></li>
+                  <li><a href="my_applications.php"> My Applications</a></li>
                   <li><a href="change_password.php"> Change Password</a></li>
-
+                  <li><a href="application_requests.php"> Application Requests </a></li>
                 </ul>
                 <div class="white-space-20"></div>
-                <a href="#" class="btn  btn-line soft btn-theme btn-pill btn-block">Post a Job</a>
-                <a href="#" class="btn  btn-line soft  btn-theme btn-pill btn-block">Build Resume</a>
+                <a href="job_post_2.php" class="btn  btn-line soft btn-theme btn-pill btn-block">Post a Job</a>
+                <a href="resume_post.php" class="btn  btn-line soft  btn-theme btn-pill btn-block">Build Resume</a>
               </div>    </div>
             <div class="col-md-9 col-sm-9">
               <div class="block-section box-side-account">
                 <h3 class="no-margin-top">Notifications</h3>
                 <hr/>
 
-                <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
-                </div>
-                <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <h4 class="color-heading">Evanto group has invited you to interview test!</h4>
-                  <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
-                  <div class="white-space-10"></div>
-                  <p>
-                    <button type="button" class="btn btn-sm btn-danger btn-theme ">Take this action</button>
-                    <button type="button" class="btn btn-sm btn-default btn-theme">Or do this</button>
-                  </p>
-                </div>
+                <?php 
+                    
+                    $con = mysqli_connect('localhost', 'root', '', 'jobportal');
+                    $query = "select * from interview where CandidateId = '{$user}'";
+                    $res = mysqli_query($con, $query);
+                    if(mysqli_num_rows($res) > 0 ){
+                      while($row = mysqli_fetch_assoc($res)){ ?>
+
+                      <div class="alert alert-success alert-dismissible fade in" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      <h4 class="color-heading">
+                        
+                        <?= $row['EmployerFullName'].' from '.$row['CompanyName']. ' has called you for an interview';?>
+
+                      </h4>
+                      <p><?= $row['Message']?></p>
+                      <div class="white-space-10"></div>
+                      </div>
+                <?php }
+                    }
+
+                    else{ ?>
+
+                    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      <strong>No new notifications!</strong><p> Check back again some other time.</p>
+                    </div>
+
+
+                    <?php } ?>
+                
+                  
+                
               </div>
             </div>
           </div>
@@ -65,37 +86,9 @@ include('header.php');
       </div><!--end body-content -->
 
 
-      <!-- main-footer -->
-      <footer class="main-footer">
-
-
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6">
-              <ul class="list-inline link-footer text-center-xs">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="blog.php">Blog</a></li>
-                <li><a href="about.php">About Us</a></li>
-                <li><a href="contact.php">Contact Us</a></li>
-              </ul>
-            </div>
-            <div class="col-sm-6 ">
-              <p class="text-center-xs hidden-lg hidden-md hidden-sm">Stay Connect</p>
-              <div class="socials text-right text-center-xs">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-youtube-play"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer><!-- end main-footer -->
+      <?php include('footer.php'); ?>
 
     </div><!-- end wrapper page -->
-
-
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="assets/plugins/jquery.js"></script>

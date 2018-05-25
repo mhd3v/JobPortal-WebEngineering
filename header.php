@@ -72,28 +72,8 @@ if(session_status() == PHP_SESSION_NONE)
                 <li class="<?php if(isset($page))if($page == 'findjob')echo 'active'?>"><a href="index.php"><strong>Find a Job</strong></a></li>
                 <li class="<?php if(isset($page))if($page == 'findresumes')echo 'active'?>"><a href="resume_list.php"><strong>Find Resumes</strong></a></li>
                 <li class="<?php if(isset($page))if($page == 'postjob')echo 'active'?>"><a href="job_post_2.php"><strong>Post a Job</strong></a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >Pages <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="about.php">About Us</a></li>
-                    <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="blog.php">Articles &amp; Blog</a></li>
-                    <li><a href="terms_privacy.php">Terms &amp; Privacy</a></li>
-                    <li><a href="error_404.php">Error 404</a></li>
-                    <li><a href="shortcode.php">Short Code</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >Features <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="job_list.php">Find a Job</a></li>
-                    <li><a href="job_details.php">Job Details</a></li>
-                    <li><a href="resume_list.php">Find Resumes</a></li>
-                    <li><a href="resume_details.php">Resume Details</a></li>
-                    <li><a href="job_post_2.php">Post a Job</a></li>
-                    <li><a href="company_page.php">Company Profile</a></li>
-                  </ul>
-                </li>
+                
+               
               </ul>
 
 
@@ -105,7 +85,6 @@ if(session_status() == PHP_SESSION_NONE)
                     <img src="assets/theme/images/people/4.jpg" alt="" class="img-profile"> &nbsp; <?php echo $_SESSION['user'] ?> <b class="caret"></b>
                   </a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="my_alerts.php"> My Alerts </a></li>
                     <li><a href="dashboard.php"> Dashboard <span class="badge ">5</span></a></li>
                     <li><a href="change_password.php"> Change Password</a></li>
                   </ul>

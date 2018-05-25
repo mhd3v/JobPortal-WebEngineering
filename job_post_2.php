@@ -220,6 +220,10 @@ include('header.php');
                   </div>
                   <p>Applications will be emailed to: <a href="#">your@email.com</a> – <a href="#">change email</a></p>
 
+                  <div id="error" class="form-group alert alert-danger" style="display:none">
+                    
+                  </div>
+
                   <div class="form-group ">
                     <input type="submit" class="btn btn-t-primary btn-theme" value="Submit">
                   </div>
@@ -227,38 +231,30 @@ include('header.php');
 
                 </form> <!-- end form post a job -->
               </div>
+
+               <!-- modal success -->
+              <div class="modal fade" id="modal-success">
+                      <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+
+                          <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" >Successfully posted!</h4>
+                          </div>
+                          <div class="modal-footer text-center">
+                            <a href="dashboard.php" class="btn btn-default btn-theme" >Okay</a>
+                          </div>
+
+                        </div>
+                      </div>
+              </div><!-- end modal success -->
             </div>
           </div>
         </div>        
       </div><!--end body-content -->
 
 
-      <!-- main-footer -->
-      <footer class="main-footer">
-
-
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6">
-              <ul class="list-inline link-footer text-center-xs">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="blog.php">Blog</a></li>
-                <li><a href="about.php">About Us</a></li>
-                <li><a href="contact.php">Contact Us</a></li>
-              </ul>
-            </div>
-            <div class="col-sm-6 ">
-              <p class="text-center-xs hidden-lg hidden-md hidden-sm">Stay Connect</p>
-              <div class="socials text-right text-center-xs">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-youtube-play"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer><!-- end main-footer -->
+      <?php include('footer.php'); ?>
 
     </div><!-- end wrapper page -->
 
@@ -293,10 +289,18 @@ include('header.php');
 
           $.ajax({
             type: 'post',
-            url: 'insert_job.php',
+            url: 'insert/insert_job.php',
             data: $('form').serialize(),
             success: function (data) {
-              alert(data);
+
+              if(data == "success")
+                $("#modal-success").modal('show');
+            
+            else{
+              $("#error").show();
+              $("#error").html(data);              
+            }
+
             }
           });
 

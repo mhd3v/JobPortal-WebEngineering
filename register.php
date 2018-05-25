@@ -21,33 +21,30 @@ include('header.php');
               <div class="panel-body">
                 <div class="row">
                   <div class="col-md-12">
-                    <!-- buttons top -->
-                    <p><a href="#" class="btn btn-primary btn-theme btn-block"><i class="fa fa-facebook pull-left bordered-right"></i> Register with Facebook</a></p>
-                    <p><a href="#" class="btn btn-danger btn-theme btn-block"><i class="fa fa-google-plus pull-left bordered-right"></i> Register with Google</a></p>
-                    <!-- end buttons top -->
+                    
 
                     <div class="white-space-10"></div>
-                    <p class="text-center"><span class="span-line">OR</span></p>
+                    <p class="text-center"><span class="span-line">Sign up</span></p>
 
                     <!-- form login -->
                     <form method="POST" id="registerform">
                       <div class="form-group">
                         <label>Username</label>
                         <input name="username" id="username" type="text" class="form-control" placeholder="Username">
-                        <div id="usernamemessage" style="margin-top:10px"></div>
+                        <div id="usernamemessage" class="alert alert-danger" style="margin-top:10px"></div>
                       </div>
                       <div class="form-group">
                         <label>Password</label>
-                        <input name="password" type="password" class="form-control" placeholder="Your Password">
+                        <input name="password" id="password" type="password" class="form-control" placeholder="Your Password">
                       </div>
                       <div class="form-group">
                         <label>Re-type Password</label>
-                        <input name="repassword" type="password" class="form-control" placeholder="Re-type Your Password">
+                        <input name="repassword" type="password" id="cpassword" class="form-control" placeholder="Re-type Your Password">
                       </div>
                       <div class="white-space-10"></div>
                       <div class="form-group no-margin">
                         <input type="submit" value="Register" class="btn btn-theme btn-lg btn-t-primary btn-block" />
-                        <div id="signupmessage" style="margin-top:10px">asd</div>
+                        <div class="alert alert-danger" id="signupmessage" style="margin-top:10px"></div>
                       </div>
                     </form><!-- form login -->
 
@@ -79,36 +76,9 @@ include('header.php');
       </div><!--end body-content -->
 
 
-      <!-- main-footer -->
-      <footer class="main-footer">
-
-
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6">
-              <ul class="list-inline link-footer text-center-xs">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="blog.php">Blog</a></li>
-                <li><a href="about.php">About Us</a></li>
-                <li><a href="contact.php">Contact Us</a></li>
-              </ul>
-            </div>
-            <div class="col-sm-6 ">
-              <p class="text-center-xs hidden-lg hidden-md hidden-sm">Stay Connect</p>
-              <div class="socials text-right text-center-xs">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-youtube-play"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer><!-- end main-footer -->
+      <?php include('footer.php'); ?>
 
     </div><!-- end wrapper page -->
-
-
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -131,6 +101,9 @@ include('header.php');
 
     $(document).ready(function(){
 
+      $("#signupmessage").hide();
+      $("#usernamemessage").hide();
+
       $(function () {
 
         $('#username').on('keyup', function (e) {
@@ -141,13 +114,13 @@ include('header.php');
             $('#usernamemessage').show();
           
 
-
           $.ajax({
             type: 'post',
-            url: 'checkusername.php',
+            url: 'check/checkusername.php',
             data: $('form').serialize(),
 
             success: function (data) {
+
               if(data == "Username available")
                 $("#usernamemessage").attr('class', 'alert alert-success');
               else
@@ -166,27 +139,33 @@ include('header.php');
 
       $(function () {
 
-        $('#registerform').on('submit', function (e) {
+      $('#registerform').on('submit', function (e) {
 
-          e.preventDefault();
+            e.preventDefault();
 
-          $.ajax({
-            type: 'post',
-            url: 'insert/insertuser.php',
-            data: $('form').serialize(),
-            success: function (data) {
-              $(location).attr('href', 'login.php')
-            },
+            $.ajax({
+              type: 'post',
+              url: 'insert/insertuser.php',
+              data: $('form').serialize(),
+              success: function (data) {
+                if(data == "success")
+                  $(location).attr('href', 'login.php');
+                else{
+                  $("#signupmessage").html(data);
+                  $("#signupmessage").show();
+                }
+              },
 
-            error:function (data) {
-              $("#signupmessage").html("failed to connect to server");
-            }
-          });
+              error:function (data) {
+                $("#signupmessage").html("failed to connect to server");
+              }
+            }); 
 
+          })
+          
         });
 
-        });
-
+        
     });
 
 

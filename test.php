@@ -1,40 +1,45 @@
 <?php 
 
 $con = mysqli_connect('localhost', 'root', '', 'jobportal');
-//name="categories[]" value="Accounting"
-if($con){
 
-    $categories = "";
-    $com = "aasd";
-    $jt = "a";
-    $jd = "asdasda";
+$user;
 
-    $catList = array("asd","asd");
+if(session_status() == PHP_SESSION_NONE) 
+session_start();
 
-    foreach($catList as $cat){
-        $categories = $cat.",".$categories;
-    }
+if(isset($_SESSION['user']))
+$user = $_SESSION['user'];
 
-    $currentTimeString = date("h:i:A - Y/m/d");
-    $currentTime = time();
+else
+echo "You need to be logged in to apply!";
 
-    $query = "INSERT INTO `job_listing` (`ListingId`, `Company`, `JobTitle`, `JobDescription`, `Location`, `JobCategory`, `Salary`, `Experience`, `ListingTimeString`, `ListingTime`)
-    VALUES (NULL, '{$com}', '{$jt}', '{$jd}', NULL, '{$categories}', NULL, NULL, '{$currentTimeString}', '{$currentTime}');";
-    
+$fullname = "asd";
+$email = "asdad";
+$reason = "asdad";
+$listingid = 12;
+
+$query = "select * from job_application where CandidateUserName = '{$user}' and ListingId = {$listingid}";
+
+$res = mysqli_query($con, $query);
+
+if(mysqli_num_rows($res) == 0){
+
+    $query = "INSERT INTO `job_application` (`ApplicationId`,`CandidateUserName`, `ListingId`,`FullName`, `Email`, `Reason`)
+    VALUES (NULL, '{$user}', {$listingid},'{$fullname}', '{$email}','{$reason}');";
+
     $res = mysqli_query($con, $query);
 
     if($res){
-        echo "data inserted";
+        echo "Signup successful";
     }
-
-    else{
+        
+    else
         echo $query;
-    }
+
 }
 
-else{
-    echo "error db";
-}
-
+else
+echo "Already applied";
 
 ?>
+
