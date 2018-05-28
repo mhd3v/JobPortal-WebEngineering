@@ -83,12 +83,13 @@ if(isset($_SESSION['user'])){
                       ?>
                       
                       <tr>
+
                         <th scope="row"><?= $count; $count++;?></th>
                         
                         <td>
                           <a href="
                           <?php if(mysqli_num_rows($res2) == 1)echo 'resume_details?rid='.$row2['ResumeId']?>">
-                          <?=$row['CandidateUserName']?>
+                          <?=$cand?>
                           </a>
                         </td>
                       
@@ -97,17 +98,16 @@ if(isset($_SESSION['user'])){
                           <?php if(mysqli_num_rows($res2) == 1)echo 'resume_details?rid='.$row2['ResumeId']?>">
                           <?=$row['FullName']?>
                           </a>
-                      </td>
-                    
-                      <td>
-                        <?php 
-                        $query1 =  "Select JobTitle from job_listing where ListingId = {$row['ListingId']}";
-                        $res1 = mysqli_query($con, $query1);
-                        $row1 = mysqli_fetch_assoc($res1);
-                        echo $row1['JobTitle'];
-                        ?>
-                        
-                      </td>
+                      
+                        <td>
+                          <?php 
+                          $query1 =  "Select JobTitle from job_listing where ListingId = {$row['ListingId']}";
+                          $res1 = mysqli_query($con, $query1);
+                          $row1 = mysqli_fetch_assoc($res1);
+                          echo $row1['JobTitle'];
+                          ?>
+                          
+                        </td>
                       
                       <?php 
                       
@@ -115,12 +115,12 @@ if(isset($_SESSION['user'])){
                       $res3 = mysqli_query($con, $query3);
                       if(mysqli_num_rows($res3) == 0){ ?>
 
-                      <td class="text-right"><a href="#modal-invite" data-toggle="modal" data-value="<?=$row['CandidateUserName']?>" class="btn btn-theme btn-xs btn-default actionbutton">Invite for Interview</a></td>
+                        <td class="text-right"><a href="#modal-invite" data-toggle="modal" data-value="<?=$cand?>" class="btn btn-theme btn-xs btn-default actionbutton">Invite for Interview</a></td>
                       
                       <?php }
 
                       else {?>
-                      <td class="text-right">Already Invited</td>
+                        <td class="text-right">Already Invited</td>
                       <?php }?>
                     </tr>
                   

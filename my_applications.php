@@ -149,7 +149,7 @@ if(isset($_SESSION['user'])){
                   <div class="modal-dialog ">
                     <div class="modal-content">
 
-                      <form id="deleteform" method="post">
+                      <form id="delete-form" method="post">
                         <div class="modal-header ">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h4 class="modal-title" >Are you sure you want to delete this application?</h4>
@@ -227,14 +227,14 @@ if(isset($_SESSION['user'])){
 
     $(function () {
 
-      $('#deleteform').on('submit', function (e) {
+      $('#delete-form').on('submit', function (e) {
 
         e.preventDefault();
 
         $.ajax({
           type: 'post',
           url: 'delete/delete_application.php',
-          data: $('#deleteform').serialize(),
+          data: $('#delete-form').serialize(),
           success: function (data) {
 
             if(data == "success"){
